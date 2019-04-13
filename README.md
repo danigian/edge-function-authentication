@@ -34,7 +34,7 @@ This GitHub repository contains two projects:
 
 - **functionSolution**: Azure Functions Solution with the required logic to check authenticity of the incoming HTTP requests:
   - The incoming Authorization header is parsed to extract useful informations like IoT Hub Hostname, Device ID, Module ID
-  - The Azure Function retrieves, using the IoT Hub Service SDK, the primaryKey for the given module of the specific device registered in the IoT Hub specified in the Authorization header. (***you need to properly set a environment variable here: key is the IoT Hub Hostname, value is the connection string to IoT Hub itself***)
+  - The Azure Function retrieves, using the IoT Hub Service SDK, the primaryKey for the given module of the specific device registered in the IoT Hub specified in the Authorization header. (***you need to properly set an [Azure Managed Service Identity](https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity#adding-a-system-assigned-identity) for the Function and add a proper [Role Assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal) for that Identity to access IoT Hub***)
   - Using the retrieved primaryKey, the Azure Function signs *(UrlEncode(sr) + "\n" + se)* and compares it with the signature received in Authorization header; if the two are equal, then the message received is a valid one and the call is authorized.
 ---
 ## FAQ
